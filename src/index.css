@@ -1,0 +1,10 @@
+/* TODO: Add sitewide styles */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+h1,h2,h3,h4,p,span,label{
+    font-family: 'Rubik';
+}
