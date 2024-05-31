@@ -1,0 +1,39 @@
+ul {
+    display: flex;
+    list-style: none;
+}
+
+ul > li > *{
+    padding: 7px 10px;
+    color: black;
+    text-decoration: none;
+}
+.logged-out > *:hover{
+    text-decoration: underline;
+    text-underline-offset: 10px;
+}
+
+.logged-out > *:active{
+    background-color: gray;
+}
+
+.profile-dropdown.hidden {
+    display: none;
+}
+
+.logged-in {
+    margin: 0px 8px 0px auto;
+    display: flex;
+}
+
+.profile-dropdown  {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    margin-right: 8px;
+}
+
+ul.profile-dropdown {
+    background-color: aliceblue;
+    padding: 8px;
+}
