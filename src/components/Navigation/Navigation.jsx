@@ -12,13 +12,13 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li>
+      <li className='btns'>
         <ProfileButton user={sessionUser} />
       </li>
     );
   } else {
     sessionLinks = (
-      <>
+      <li className='btns'>
         <li>
           <OpenModalButton
             buttonText="Log In"
@@ -31,7 +31,7 @@ function Navigation({ isLoaded }) {
             modalComponent={<SignupFormModal />}
           />
         </li>
-      </>
+      </li>
     );
   }
 

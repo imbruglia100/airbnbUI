@@ -13,11 +13,6 @@ ul > li > *{
     display: none;
 }
 
-.logged-in {
-    margin: 0px 8px 0px auto;
-    display: flex;
-}
-
 .profile-dropdown  {
     display: flex;
     position: relative;
@@ -28,4 +23,9 @@ ul > li > *{
 ul.profile-dropdown {
     background-color: aliceblue;
     padding: 8px;
+}
+
+.btns {
+    margin: 0 10px 0 auto;
+    display: flex;
 }
