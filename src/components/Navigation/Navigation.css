@@ -1,31 +1,18 @@
-ul {
+nav {
     display: flex;
     list-style: none;
+    border-bottom: 2px solid rgb(168, 168, 168);
+    align-items: center;
+    padding: 10px;
 }
 
-ul > li > *{
+nav > li > *{
     padding: 7px 10px;
-    color: black;
-    text-decoration: none;
 }
 
-.profile-dropdown.hidden {
-    display: none;
-}
 
-.profile-dropdown  {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    margin-right: 8px;
-}
-
-ul.profile-dropdown {
-    background-color: aliceblue;
-    padding: 8px;
-}
 
 .btns {
-    margin: 0 10px 0 auto;
+    margin: 0 0 0 auto;
     display: flex;
 }
