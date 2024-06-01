@@ -8,14 +8,6 @@ ul > li > *{
     color: black;
     text-decoration: none;
 }
-.logged-out > *:hover{
-    text-decoration: underline;
-    text-underline-offset: 10px;
-}
-
-.logged-out > *:active{
-    background-color: gray;
-}
 
 .profile-dropdown.hidden {
     display: none;
