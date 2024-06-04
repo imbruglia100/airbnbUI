@@ -1,6 +1,6 @@
 /** @format */
 
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import LoginFormModal from "../LoginFormModal/LoginFormModal";
@@ -16,15 +16,18 @@ import { FaUserCircle } from "react-icons/fa";
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    navigate('/')
   };
 
   const LogoutBtn = () => <button className="primary-btn" onClick={logout}>Logout</button>;
 
+
   let sessionLinks;
-  console.log(sessionUser)
+
   if (sessionUser) {
     sessionLinks = (
       <li className='btns'>

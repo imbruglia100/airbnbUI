@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import { csrfFetch } from './csrf';
 
 const SET_SPOTS = "spots/setSpots";
@@ -22,10 +21,16 @@ export const getAllSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots')
 
     if(response.ok){
-        const spots = await response.json()
+        const { Spots } = await response.json()
+        const newState = {}
 
-        dispatch(setSpots(spots))
-        return spots
+        Spots.forEach(spot => {
+
+          newState[spot.id] = spot
+        })
+
+        dispatch(setSpots(newState))
+        return newState
     }
 }
 
@@ -47,7 +52,7 @@ const initialState = { spots: null, current: null};
 const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_SPOTS:
-      return { ...state, spots: action.spots };
+      return { ...state, spots: action.payload };
     default:
       return state;
   }

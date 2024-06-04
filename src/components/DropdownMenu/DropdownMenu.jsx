@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import './Dropdown.css'
-import { VscChromeClose } from "react-icons/vsc";
 
 function DropdownMenu({ items, icon }) {
   const [showMenu, setShowMenu] = useState(false);

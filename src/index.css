@@ -18,6 +18,10 @@
   background-color: #c47a3e;
 }
 
+.primary-btn:disabled {
+  background-color: #da9f6f;
+}
+
 *{
     font-family: 'Rubik';
 }

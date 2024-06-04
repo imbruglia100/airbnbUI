@@ -1,8 +1,10 @@
-import { useState } from 'react';
-import * as sessionActions from '../../store/session';
-import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/Modal';
-import './LoginForm.css';
+/** @format */
+
+import { useState } from "react";
+import * as sessionActions from "../../store/session";
+import { useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
+import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -10,6 +12,19 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+
+  const handleDemo = (e) => {
+    e.preventDefault();
+    setErrors({});
+    return dispatch(sessionActions.login({ credential: 'demoUser', password: '123456' }))
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,37 +40,39 @@ function LoginFormModal() {
   };
 
   return (
+    <>
+      <form id='demo' onSubmit={handleDemo}></form>
       <form onSubmit={handleSubmit}>
-      <h1>Log In</h1>
-      <div className='input-container'>
-        <label>
-          Username or Email
-          </label>
+        <h1>Log In</h1>
+        <div className='input-container'>
+          <label>Username or Email</label>
           <input
-            type="text"
+            type='text'
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
             required
           />
-      </div>
+        </div>
 
-      <div className='input-container' >
-
-        <label>
-          Password
-          </label>
+        <div className='input-container'>
+          <label>Password</label>
           <input
-            type="password"
+            type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-      </div>
-        {errors.credential && (
-          <p>{errors.credential}</p>
-        )}
-        <button className='primary-btn' type="submit">Log In</button>
+        </div>
+        {errors.credential && <p>{errors.credential}</p>}
+        <button disabled={credential.length < 4 || password.length < 6} className='primary-btn' type='submit'>
+          Log In
+        </button>
+
+        <button className='primary-btn' form='demo'>
+          Log In as Demo User
+        </button>
       </form>
+    </>
   );
 }
 

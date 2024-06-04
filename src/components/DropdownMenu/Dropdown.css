@@ -2,6 +2,10 @@
     position: relative;
 }
 
+.dropdown-icon {
+    cursor: pointer;
+}
+
 .dropdown-items.hidden {
     display: none;
 
