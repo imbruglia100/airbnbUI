@@ -39,7 +39,8 @@
 
 #spot-name {
     opacity: 0;
-    color: #f7c465;
+    word-wrap: normal;
+    color: #ffffff;
     font-weight: 600;
     position: absolute;
     bottom: 4px;
