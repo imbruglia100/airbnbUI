@@ -1,15 +1,18 @@
-import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import house from '../../assets/house.png'
 import './Spots.css'
 import { FaStar } from "react-icons/fa";
 
 
 const SpotCard = ({ spot }) => {
-
+    const navigate = useNavigate()
+    const handleRoute = () => {
+        navigate(`/spots/${spot.id}`)
+    }
     return (
         <div className="spot-card">
-            <div aria-describedby='spot-name' className='spot-img-container'>
-                <img className='spot-img'  src={spot.previewImage || house} />
+            <div aria-describedby='spot-name' onClick={handleRoute} className='spot-img-container'>
+                <img  className='spot-img'  src={spot.previewImage || house} />
                 <div role='tooltip' id='spot-name'>{spot.name}</div>
             </div>
                 <div className='spot-info'>
