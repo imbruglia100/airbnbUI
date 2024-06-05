@@ -12,7 +12,7 @@ const SpotsGallery = () => {
     }, [])
     return (
     <div className='spots-container'>
-        {spots.length > 0 && spots.map(spot => <SpotCard spot={spot} />)}
+        { !spots.error ? spots.map(spot => <SpotCard spot={spot} />) : spots.error }
     </div>
     )
 }

@@ -15,8 +15,14 @@ export const getReviewsBySpotById = (id) => async (dispatch) => {
     if(response.ok){
         const spotReviews = await response.json()
 
-        dispatch(setReviews(spotReviews))
-        return spotReviews
+        const newState = {};
+        spotReviews.Reviews.forEach(review => {
+
+          newState[review.id] = review
+        })
+
+        dispatch(setReviews(newState))
+        return newState
     }
 }
 
@@ -37,9 +43,7 @@ export const getReviewsBySpotById = (id) => async (dispatch) => {
 //   }
 // }
 
-
-
-const initialState = { spots: null, current: null};
+const initialState = { reviews: null};
 
 const reviewsReducer = (state = initialState, action) => {
   switch (action.type) {

@@ -7,19 +7,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSpotById } from "../../store/spots";
 import { FaStar } from "react-icons/fa";
 import photo from '../../assets/house.png'
+import { getReviewsBySpotById } from "../../store/reviews";
+import ReviewCard from "./ReviewCard";
 
 const SpotDetailPage = () => {
   const { spotId } = useParams();
   const dispatch = useDispatch();
 
-  const current = useSelector((state) => state.spotState.current);
-    console.log(current)
+  const {current, reviews} = useSelector((state) => {return {current:state.spotState.current, reviews:state.reviewState.reviews}});
+
   useEffect(() => {
     dispatch(getSpotById(spotId));
+    dispatch(getReviewsBySpotById(spotId))
   }, [dispatch, spotId]);
 
   return (
-    current?.name ? <div className="spot-detail-container">
+    current?.name ?
+    (<div className="spot-detail-container">
       <h1>{current.name}</h1>
       <h3>{`${current.city}, ${current.state}, ${current.country}`}</h3>
 
@@ -35,10 +39,6 @@ const SpotDetailPage = () => {
                     ) //temp
                 }
             })}
-            {/* <img  src={photo} />
-            <img  src={photo} /> */}
-
-
         </div>
       </div>
 
@@ -63,8 +63,10 @@ const SpotDetailPage = () => {
         </div>
       </div>
 
-      <div>reviews</div>
-    </div> : <h1>Loading</h1>
+      <div>
+        {Object.values(reviews).map(review=> <ReviewCard review={review}/>)}
+      </div>
+    </div>) : <h1>Loading...</h1>
   );
 };
 

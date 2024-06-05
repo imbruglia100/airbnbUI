@@ -40,6 +40,7 @@ export const getAllSpots = () => async (dispatch) => {
         dispatch(setSpots(newState))
         return newState
     }
+    return {error: "Unable to retrieve spots. Please try again shortly"}
 }
 
 export const getSpotById = (id) => async (dispatch) => {
@@ -51,6 +52,8 @@ export const getSpotById = (id) => async (dispatch) => {
         dispatch(setCurrentSpot(spot))
         return spot
     }
+
+    return {error: "Unable to retrieve details."}
 }
 
 export const createASpot = (newSpot) => async (dispatch) => {
