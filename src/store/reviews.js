@@ -43,7 +43,7 @@ const initialState = { spots: null, current: null};
 
 const reviewsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_SPOTS:
+    case SET_REVIEWS:
       return { ...state, reviews: action.payload };
     default:
       return state;
