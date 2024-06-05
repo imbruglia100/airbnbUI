@@ -43,12 +43,12 @@ export const getReviewsBySpotById = (id) => async (dispatch) => {
 //   }
 // }
 
-const initialState = { reviews: null};
+const initialState = { reviews: { isLoaded: false }};
 
 const reviewsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_REVIEWS:
-      return { ...state, reviews: action.payload };
+      return { ...state, reviews: {...action.payload, isLoaded: true} };
     default:
       return state;
   }

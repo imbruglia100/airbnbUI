@@ -15,6 +15,7 @@ const SpotDetailPage = () => {
   const dispatch = useDispatch();
 
   const {current, reviews} = useSelector((state) => {return {current:state.spotState.current, reviews:state.reviewState.reviews}});
+  const isLoaded = useSelector(state=>state.spotState.current.isLoaded)
 
   useEffect(() => {
     dispatch(getSpotById(spotId));
@@ -22,7 +23,8 @@ const SpotDetailPage = () => {
   }, [dispatch, spotId]);
 
   return (
-    current?.name ?
+    isLoaded ?
+      !current.error ?
     (<div className="spot-detail-container">
       <h1>{current.name}</h1>
       <h3>{`${current.city}, ${current.state}, ${current.country}`}</h3>
@@ -58,7 +60,7 @@ const SpotDetailPage = () => {
                         <div>{current.numReviews} reviews</div>
                     </div>
                 </div>
-                    <button className="primary-btn" onClick={() => console.alert("Feature Coming Soon..")}>Reserve</button>
+                    <button className="primary-btn" onClick={() => alert("Feature Coming Soon..")}>Reserve</button>
             </div>
         </div>
       </div>
@@ -66,7 +68,8 @@ const SpotDetailPage = () => {
       <div>
         {Object.values(reviews).map(review=> <ReviewCard review={review}/>)}
       </div>
-    </div>) : <h1>Loading...</h1>
+
+    </div>) : <h2>{current.error}</h2> : <h1>Loading...</h1>
   );
 };
 

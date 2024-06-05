@@ -75,14 +75,14 @@ export const createASpot = (newSpot) => async (dispatch) => {
 
 
 
-const initialState = { spots: null, current: null};
+const initialState = { spots: { isLoaded:false, error: null }, current: { isLoaded: false, error: null }};
 
 const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_SPOTS:
-      return { ...state, spots: action.payload };
+      return { ...state, spots: {...action.payload, isLoaded: true} };
     case SET_CURRENT:
-      return { ...state, current: action.payload };
+      return { ...state, current: {...action.payload, isLoaded: true} };
     case ADD_SPOT:
       return { ...state, spots: {...state.spots, ...action.payload} };
     default:
