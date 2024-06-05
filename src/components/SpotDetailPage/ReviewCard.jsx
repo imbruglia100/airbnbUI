@@ -1,10 +1,12 @@
+import './ReviewCard.css'
 
-const ReviewCard = ({review}) => {
+const ReviewCard = ({ review }) => {
     const {User} = review
-    console.log(User)
+    console.log(review)
     return (
-        <div className="comment-container">
-            <h2>{User?.firstName || ""}</h2>
+        <div className="review-container">
+            <h2>{User?.firstName || "Happy Renter"}</h2>
+            <h3>{review.createdAt.split('T')[0]}</h3>
             {review.review}
         </div>
     )

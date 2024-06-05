@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSpotById } from "../../store/spots";
 import { FaStar } from "react-icons/fa";
 import photo from '../../assets/house.png'
-import { getReviewsBySpotById } from "../../store/reviews";
+import { getReviewsBySpotById, setReviews } from "../../store/reviews";
 import ReviewCard from "./ReviewCard";
 
 const SpotDetailPage = () => {
@@ -18,10 +18,11 @@ const SpotDetailPage = () => {
   const isLoaded = useSelector(state=>state.spotState.current.isLoaded)
 
   useEffect(() => {
+    dispatch(setReviews({}))
     dispatch(getSpotById(spotId));
     dispatch(getReviewsBySpotById(spotId))
   }, [dispatch, spotId]);
-
+  console.log(reviews)
   return (
     isLoaded ?
       !current.error ?
@@ -57,7 +58,7 @@ const SpotDetailPage = () => {
                     <div className="spot-reserve-review-info">
                         <div><FaStar />{current.avgStarRating}</div>
                         •
-                        <div>{current.numReviews} reviews</div>
+                        <div>{current.numReviews} {current.numReviews === 1 ? "review" : "reviews"}</div>
                     </div>
                 </div>
                     <button className="primary-btn" onClick={() => alert("Feature Coming Soon..")}>Reserve</button>
@@ -65,9 +66,10 @@ const SpotDetailPage = () => {
         </div>
       </div>
 
-      <div>
-        {Object.values(reviews).map(review=> <ReviewCard review={review}/>)}
-      </div>
+      {reviews && <div className="reviews-container">
+        <h2><FaStar /> {current.avgStarRating} • {current.numReviews} reviews</h2>
+        {Object.values(reviews).map(review=> <ReviewCard key={review.id} review={review}/>)}
+      </div> }
 
     </div>) : <h2>{current.error}</h2> : <h1>Loading...</h1>
   );

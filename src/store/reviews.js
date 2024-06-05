@@ -2,7 +2,7 @@ import { csrfFetch } from './csrf';
 
 const SET_REVIEWS = "reviews/setReviews";
 
-const setReviews = (reviews) => {
+export const setReviews = (reviews) => {
   return {
     type: SET_REVIEWS,
     payload: reviews
@@ -14,7 +14,7 @@ export const getReviewsBySpotById = (id) => async (dispatch) => {
 
     if(response.ok){
         const spotReviews = await response.json()
-
+        console.log(spotReviews.Reviews)
         const newState = {};
         spotReviews.Reviews.forEach(review => {
 
@@ -43,12 +43,12 @@ export const getReviewsBySpotById = (id) => async (dispatch) => {
 //   }
 // }
 
-const initialState = { reviews: { isLoaded: false }};
+const initialState = { reviews: null, isLoaded: false};
 
 const reviewsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_REVIEWS:
-      return { ...state, reviews: {...action.payload, isLoaded: true} };
+      return { ...state, reviews: {...action.payload}, isLoaded: true };
     default:
       return state;
   }

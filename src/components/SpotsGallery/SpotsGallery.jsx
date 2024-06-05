@@ -6,7 +6,7 @@ import SpotCard from './SpotCard';
 
 const SpotsGallery = () => {
     const spots = useSelector(state=> Object.values(state.spotState.spots))
-    const isLoaded = useSelector(state=>state.spotState.spots.isLoaded)
+    const isLoaded = useSelector(state=>state.spotState.isLoaded)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getAllSpots())
