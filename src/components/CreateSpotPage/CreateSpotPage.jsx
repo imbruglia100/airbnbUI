@@ -79,8 +79,8 @@ const CreateSpotPage = () => {
     //   : "";
 
     if(!Object.values(errors).length > 0){
-        console.log('All good')
-        const { id } = await dispatch(createASpot(newSpot, images.previewImage));
+
+        const { id } = await dispatch(createASpot(newSpot));
         setNewSpot({})
         navigate(`/huts/${id}`)
     }

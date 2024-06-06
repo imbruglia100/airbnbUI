@@ -34,13 +34,18 @@ const router = createBrowserRouter([
         element: <SpotsGallery />
       },
       {
+        path: '/huts/create',
+        element: <CreateSpotPage />
+      },
+      {
+        path: '/huts/manage',
+        element: <h1>Manage huts</h1>
+      },
+      {
         path: '/huts/:spotId',
         element: <SpotDetailPage />
       },
-      {
-        path: '/huts/create',
-        element: <CreateSpotPage />
-      }
+
     ]
   }
 ]);

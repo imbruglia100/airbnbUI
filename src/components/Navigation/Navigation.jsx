@@ -35,6 +35,7 @@ function Navigation({ isLoaded }) {
         <DropdownMenu icon={<FaUserCircle style={{fontSize:'25px'}}/>} items={[
           `Welcome, ${sessionUser.firstName[0].toUpperCase() + sessionUser.firstName.slice(1)}`,
           sessionUser.email,
+          <button className="secondary-btn" style={{width: '100%', margin: "5px 0"}} onClick={() => navigate('/huts/manage')}>Manage Spots</button>,
           <LogoutBtn />
         ]}/>
       </li>

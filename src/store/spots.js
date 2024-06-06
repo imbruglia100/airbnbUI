@@ -31,6 +31,7 @@ export const getAllSpots = () => async (dispatch) => {
     if(response.ok){
         const { Spots } = await response.json()
         const newState = {}
+        console.log(Spots)
 
         Spots.forEach(spot => {
 
@@ -56,6 +57,29 @@ export const getSpotById = (id) => async (dispatch) => {
     return {error: "Unable to retrieve details."}
 }
 
+export const getSpotsFromCurrent = (user) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/current`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(user)
+  })
+
+  if(response.ok){
+      const currSpots = await response.json()
+      const newState = {}
+      currSpots && currSpots.forEach(spot => {
+
+        newState[spot.id] = spot
+      })
+      dispatch(setCurrentSpot(currSpots))
+      return currSpots
+  }
+
+  return {error: "Unable to retrieve details."}
+}
+
 export const createASpot = (newSpot) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots`, {
     method: 'POST',
@@ -78,13 +102,14 @@ export const createASpot = (newSpot) => async (dispatch) => {
 const initialState = { spots: { error: null }, isLoaded:false, current: { isLoaded: false, error: null }};
 
 const spotsReducer = (state = initialState, action) => {
+
   switch (action.type) {
     case SET_SPOTS:
       return { ...state, spots: {...action.payload }, isLoaded: true };
     case SET_CURRENT:
       return { ...state, current: {...action.payload, isLoaded: true} };
     case ADD_SPOT:
-      return { ...state, spots: {...state.spots, ...action.payload} };
+      return { ...state, spots: {...state.spots, [action.payload.id]: action.payload} };
     default:
       return state;
   }

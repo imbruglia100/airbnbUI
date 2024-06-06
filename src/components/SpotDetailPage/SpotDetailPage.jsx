@@ -22,7 +22,7 @@ const SpotDetailPage = () => {
     dispatch(getSpotById(spotId));
     dispatch(getReviewsBySpotById(spotId))
   }, [dispatch, spotId]);
-  console.log(reviews)
+
   return (
     isLoaded ?
       !current.error ?

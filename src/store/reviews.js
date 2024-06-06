@@ -14,9 +14,8 @@ export const getReviewsBySpotById = (id) => async (dispatch) => {
 
     if(response.ok){
         const spotReviews = await response.json()
-        console.log(spotReviews.Reviews)
         const newState = {};
-        spotReviews.Reviews.forEach(review => {
+        spotReviews.Reviews && spotReviews.Reviews.forEach(review => {
 
           newState[review.id] = review
         })
