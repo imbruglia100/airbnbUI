@@ -31,6 +31,7 @@ function Navigation({ isLoaded }) {
   if (sessionUser) {
     sessionLinks = (
       <li className='btns'>
+        <button className="secondary-btn" onClick={() => navigate('/huts/create')}>List Your Hut</button>
         <DropdownMenu icon={<FaUserCircle style={{fontSize:'25px'}}/>} items={[
           `Welcome, ${sessionUser.firstName[0].toUpperCase() + sessionUser.firstName.slice(1)}`,
           sessionUser.email,
@@ -65,7 +66,7 @@ function Navigation({ isLoaded }) {
           <img style={{ width: "30%" }} src={logo} />
         </NavLink>
       </li>
-      {isLoaded && sessionLinks}
+        {isLoaded && sessionLinks}
     </nav>
   );
 }

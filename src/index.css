@@ -22,8 +22,59 @@
   background-color: #da9f6f;
 }
 
+.secondary-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #a7510b;
+  border-radius: 16px;
+  background-color: transparent;
+  color:#a7510b;
+  font-weight: 500;
+  transition: all 100ms ease-in-out;
+  cursor: pointer;
+}
+
+.secondary-btn:hover {
+  scale:1.05;
+  background-color: transparent;
+}
+
+.secondary-btn:active {
+  background-color: transparent;
+  scale: 1;
+}
+
+.secondary-btn:disabled {
+  border: 2px solid #af9a88;
+  color:#af9a88
+}
+
+input, textarea {
+  padding: 5px;
+  border-radius: 8px;
+  border: none;
+  background-color: aliceblue;
+  border: 1px black solid;
+  max-width: 100%;
+  resize: none;
+}
+
 *{
     font-family: 'Rubik';
+    box-sizing: border-box;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */

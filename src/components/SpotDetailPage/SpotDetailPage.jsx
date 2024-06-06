@@ -66,8 +66,9 @@ const SpotDetailPage = () => {
         </div>
       </div>
 
-      {reviews && <div className="reviews-container">
-        <h2><FaStar /> {current.avgStarRating} • {current.numReviews} reviews</h2>
+      {reviews &&
+      <div className="reviews-container">
+        <h2><FaStar /> {current.avgStarRating} {current.numReviews > 0 ? `• ${current.numReviews} reviews` : 'New'}</h2>
         {Object.values(reviews).map(review=> <ReviewCard key={review.id} review={review}/>)}
       </div> }
 

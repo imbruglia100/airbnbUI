@@ -7,7 +7,7 @@ import { FaStar } from "react-icons/fa";
 const SpotCard = ({ spot }) => {
     const navigate = useNavigate()
     const handleRoute = () => {
-        navigate(`/spots/${spot.id}`)
+        navigate(`/huts/${spot.id}`)
     }
     return (
         <div className="spot-card">
