@@ -62,7 +62,7 @@ export const createASpot = (newSpot) => async (dispatch) => {
     headers: {
       "Content-Type": "application/json"
     },
-    body: newSpot
+    body: JSON.stringify({...newSpot})
   })
 
   if(response.ok){
