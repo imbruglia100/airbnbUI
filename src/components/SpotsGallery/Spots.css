@@ -1,3 +1,16 @@
+.next-page-btns {
+    display: flex;
+    margin: 0 auto;
+    width: fit-content;
+    align-items: center;
+}
+
+.next-page-btns > button{
+    margin: 5px;
+    height: fit-content;
+    
+}
+
 .spots-container {
     display: flex;
     justify-content: center;

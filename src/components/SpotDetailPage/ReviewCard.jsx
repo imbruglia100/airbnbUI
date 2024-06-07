@@ -2,7 +2,7 @@ import './ReviewCard.css'
 
 const ReviewCard = ({ review }) => {
     const {User} = review
-    console.log(review)
+
     return (
         <div className="review-container">
             <h2>{User?.firstName || "Happy Renter"}</h2>

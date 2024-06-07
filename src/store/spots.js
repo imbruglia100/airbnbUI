@@ -25,13 +25,12 @@ const addSpot = (spot) => {
   }
 }
 
-export const getAllSpots = () => async (dispatch) => {
-    const response = await csrfFetch('/api/spots')
+export const getAllSpots = (page) => async (dispatch) => {
+    const response = page ? await csrfFetch(`/api/spots?page=${page}`) : await csrfFetch(`/api/spots`)
 
     if(response.ok){
         const { Spots } = await response.json()
         const newState = {}
-        console.log(Spots)
 
         Spots.forEach(spot => {
 
@@ -57,28 +56,6 @@ export const getSpotById = (id) => async (dispatch) => {
     return {error: "Unable to retrieve details."}
 }
 
-export const getSpotsFromCurrent = (user) => async (dispatch) => {
-  const response = await csrfFetch(`/api/spots/current`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(user)
-  })
-
-  if(response.ok){
-      const currSpots = await response.json()
-      const newState = {}
-      currSpots && currSpots.forEach(spot => {
-
-        newState[spot.id] = spot
-      })
-      dispatch(setCurrentSpot(currSpots))
-      return currSpots
-  }
-
-  return {error: "Unable to retrieve details."}
-}
 
 export const createASpot = (newSpot) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots`, {

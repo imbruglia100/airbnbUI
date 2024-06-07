@@ -6,6 +6,7 @@ import * as sessionActions from './store/session';
 import SpotsGallery from './components/SpotsGallery/SpotsGallery';
 import SpotDetailPage from './components/SpotDetailPage/SpotDetailPage';
 import CreateSpotPage from './components/CreateSpotPage/CreateSpotPage';
+import ManageHutsPage from './components/ManageHutsPage/ManageHutsPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/huts/manage',
-        element: <h1>Manage huts</h1>
+        element: <ManageHutsPage />
       },
       {
         path: '/huts/:spotId',
