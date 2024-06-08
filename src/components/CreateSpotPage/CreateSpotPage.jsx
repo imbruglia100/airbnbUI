@@ -20,9 +20,9 @@ const CreateSpotPage = () => {
   });
 
   const [images, setImages] = useState({});
-  console.log(images)
   const [errors, setErrors] = useState({});
-
+  const [previewImage, setPreviewImage] = useState('')
+  console.log(images)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -66,8 +66,7 @@ const CreateSpotPage = () => {
         })
       : "";
 
-      const preview = images.find(img => img.preview === true)
-      !preview
+      !previewImage
       ? setErrors((prev) => {
           return { ...prev, previewImage: "Preview Image is required" };
         })
@@ -83,9 +82,9 @@ const CreateSpotPage = () => {
 
         const res = await dispatch(createASpot(newSpot));
 
-        if(!res.errors){
+        if(!res?.errors){
           const img = await dispatch(addImagesWithId(res.id, images))
-          if(!img.errors){
+          if(!img?.errors){
             setNewSpot({})
             navigate(`/huts/${res.id}`)
           }
@@ -262,11 +261,12 @@ const CreateSpotPage = () => {
           <input
             type='text'
             placeholder='Preview Image URL'
-            onChange={({ target }) =>
+            onChange={({ target }) =>{
+              setPreviewImage(target.value)
               setImages((prev) => {
                 return { ...prev, '4': {url: target.value, preview: true}};
               })
-            }
+            }}
           />
         </div>
 
