@@ -107,7 +107,7 @@ const initialState = {
 const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_SPOTS:
-      return { ...state, spots: { ...action.payload }, isLoaded: true };
+      return { ...state, spots: { ...action.payload }, current: initialState.current, isLoaded: true };
     case SET_CURRENT:
       return {
         ...state,

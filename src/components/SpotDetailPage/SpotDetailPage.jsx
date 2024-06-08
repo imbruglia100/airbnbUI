@@ -27,7 +27,7 @@ const SpotDetailPage = () => {
     dispatch(getSpotById(spotId));
     dispatch(getReviewsBySpotById(spotId));
   }, [dispatch, spotId]);
-  const previewImg = current.SpotImages.filter(img => img.preview===true)
+  const previewImg = current?.SpotImages && current?.SpotImages.length > 0 ? current?.SpotImages.filter(img => img.preview===true) : [{url: ''}]
 
   return isLoaded ? (
     !current.error ? (

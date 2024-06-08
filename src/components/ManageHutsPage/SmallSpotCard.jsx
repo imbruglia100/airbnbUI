@@ -12,7 +12,10 @@ const SmallSpotCard = ({spot}) => {
     return (
         spot && <div className="small-spot-container">
             <h3>{spot?.name}</h3>
-            <img src={spot?.previewImage} />
+            <div className="imageContainer">
+
+                <img src={spot?.previewImage} />
+            </div>
             <p>{spot?.address}, {spot?.city} {spot?.state}</p>
             <div className="btns-group">
                 <button className="secondary-btn">Edit</button>
