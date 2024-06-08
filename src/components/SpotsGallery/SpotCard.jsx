@@ -20,7 +20,7 @@ const SpotCard = ({ spot }) => {
                     <p>{spot.city}, {spot.state}</p>
                     <p>${spot.price}/night</p>
                 </div>
-                <p className='spot-star-rating'>{spot.avgRating === 0 ? 'New!' : <><FaStar />{spot.avgRating}</>}</p>
+                <p className='spot-star-rating'>{spot.avgRating === 0 ? 'New!' : <><FaStar />{Number(spot.avgRating).toFixed(1)}</>}</p>
             </div>
         </div>
     )

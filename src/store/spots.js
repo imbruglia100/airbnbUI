@@ -84,7 +84,7 @@ const spotsReducer = (state = initialState, action) => {
     case SET_SPOTS:
       return { ...state, spots: {...action.payload }, isLoaded: true };
     case SET_CURRENT:
-      return { ...state, current: {...action.payload, isLoaded: true} };
+      return { ...state, current: {...action.payload, avgStarRating: Number(action.payload.avgStarRating).toFixed(1) , isLoaded: true} };
     case ADD_SPOT:
       return { ...state, spots: {...state.spots, [action.payload.id]: action.payload} };
     default:

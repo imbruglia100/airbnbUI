@@ -48,9 +48,9 @@ const CreateSpotPage = () => {
           return { ...prev, state: "State is required" };
         })
       : "";
-    !newSpot.description
+    !newSpot.description || newSpot.description.length < 30
       ? setErrors((prev) => {
-          return { ...prev, description: "Description is required" };
+          return { ...prev, description: "Description needs 30 characters or more" };
         })
       : "";
 

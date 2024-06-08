@@ -11,6 +11,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 5px;
     overflow: hidden;
+    border-radius: 16px;
 }
 
 .img-container .main-preview-img {

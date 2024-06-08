@@ -6,23 +6,24 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpotById } from "../../store/spots";
 import { FaStar } from "react-icons/fa";
-import photo from '../../assets/house.png'
 import { getReviewsBySpotById, setReviews } from "../../store/reviews";
 import ReviewCard from "./ReviewCard";
 
 const SpotDetailPage = () => {
   const { spotId } = useParams();
   const dispatch = useDispatch();
-
-  const {current, reviews} = useSelector((state) => {return {current:state.spotState.current, reviews:state.reviewState.reviews}});
+  const {current, reviews, user} = useSelector((state) => {return {current:state.spotState.current, reviews:state.reviewState.reviews, user:state.session.user}});
   const isLoaded = useSelector(state=>state.spotState.current.isLoaded)
 
+  const handleReview = (e) => {
+    e.preventDefault()
+    
+  }
   useEffect(() => {
     dispatch(setReviews({}))
     dispatch(getSpotById(spotId));
     dispatch(getReviewsBySpotById(spotId))
   }, [dispatch, spotId]);
-
   return (
     isLoaded ?
       !current.error ?
@@ -31,7 +32,7 @@ const SpotDetailPage = () => {
       <h3>{`${current.city}, ${current.state}, ${current.country}`}</h3>
 
       <div className="img-container">
-        <img className="main-preview-img" src={photo} />
+        <img className="main-preview-img" src={current.previewImages} />
 
         <div className="img-small-container">
             {current.SpotImages.map((img, i) =>{
@@ -68,8 +69,9 @@ const SpotDetailPage = () => {
 
       {reviews &&
       <div className="reviews-container">
-        <h2><FaStar /> {current.avgStarRating} {current.numReviews > 0 ? `• ${current.numReviews} reviews` : 'New'}</h2>
-        {Object.values(reviews).map(review=> <ReviewCard key={review.id} review={review}/>)}
+        <h2><FaStar /> {current.avgStarRating} {current.numReviews > 0 ? `• ${current.numReviews} ${current.numReviews === 1 ? 'review' : 'reviews'}` : 'New'}</h2>
+        {user && current.Owner.id !== user.id && !Object.keys(reviews).includes(user.id) && <button onClick={handleReview} className="secondary-btn" style={{width: "fit-content", marginBottom: "25px"}}>Post Your Review</button>}
+        {Object.values(reviews).length === 0 && user && current.Owner.id !== user.id ? <h3>Be the first one to post a review!</h3> : Object.values(reviews).reverse().map(review=> <ReviewCard key={review.id} review={review}/>)}
       </div> }
 
     </div>) : <h2>{current.error}</h2> : <h1>Loading...</h1>

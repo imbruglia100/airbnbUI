@@ -25,6 +25,28 @@ export const getReviewsBySpotById = (id) => async (dispatch) => {
     }
 }
 
+export const createAReviewWithId = (id, review) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${id}/reviews`, {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(review)
+  })
+
+  if(response.ok){
+      const spotReviews = await response.json()
+      const newState = {};
+      spotReviews.Reviews && spotReviews.Reviews.forEach(review => {
+
+        newState[review.id] = review
+      })
+
+      dispatch(setReviews(newState))
+      return newState
+  }
+}
+
 // export const createASpot = (newSpot) => async (dispatch) => {
 //   const response = await csrfFetch(`/api/spots`, {
 //     method: 'POST',
