@@ -8,73 +8,118 @@ import { getSpotById } from "../../store/spots";
 import { FaStar } from "react-icons/fa";
 import { getReviewsBySpotById, setReviews } from "../../store/reviews";
 import ReviewCard from "./ReviewCard";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import AddReviewModal from "../ReviewModal/ReviewModal";
 
 const SpotDetailPage = () => {
   const { spotId } = useParams();
   const dispatch = useDispatch();
-  const {current, reviews, user} = useSelector((state) => {return {current:state.spotState.current, reviews:state.reviewState.reviews, user:state.session.user}});
-  const isLoaded = useSelector(state=>state.spotState.current.isLoaded)
+  const { current, reviews, user } = useSelector((state) => {
+    return {
+      current: state.spotState.current,
+      reviews: state.reviewState.reviews,
+      user: state.session.user,
+    };
+  });
+  const isLoaded = useSelector((state) => state.spotState.current.isLoaded);
 
   const handleReview = (e) => {
-    e.preventDefault()
-    
-  }
+    e.preventDefault();
+  };
   useEffect(() => {
-    dispatch(setReviews({}))
+    dispatch(setReviews({}));
     dispatch(getSpotById(spotId));
-    dispatch(getReviewsBySpotById(spotId))
+    dispatch(getReviewsBySpotById(spotId));
   }, [dispatch, spotId]);
-  return (
-    isLoaded ?
-      !current.error ?
-    (<div className="spot-detail-container">
-      <h1>{current.name}</h1>
-      <h3>{`${current.city}, ${current.state}, ${current.country}`}</h3>
+  return isLoaded ? (
+    !current.error ? (
+      <div className='spot-detail-container'>
+        <h1>{current.name}</h1>
+        <h3>{`${current.city}, ${current.state}, ${current.country}`}</h3>
 
-      <div className="img-container">
-        <img className="main-preview-img" src={current.previewImages} />
+        <div className='img-container'>
+          <img className='main-preview-img' src={current.previewImages} />
 
-        <div className="img-small-container">
-            {current.SpotImages.map((img, i) =>{
-
-                if(i < 3){
-                    return (
-                            <img key={img.id} src={img.url} />
-                    ) //temp
-                }
+          <div className='img-small-container'>
+            {current.SpotImages.map((img, i) => {
+              if (i < 3) {
+                return <img key={img.id} src={img.url} />; //temp
+              }
             })}
+          </div>
         </div>
-      </div>
 
-      <div className="spot-info-container">
-        <div className="spot-info">
+        <div className='spot-info-container'>
+          <div className='spot-info'>
             <h2>{`Hosted by ${current.Owner.firstName} ${current.Owner.lastName}`}</h2>
             <p>{current.description}</p>
-        </div>
+          </div>
 
-        <div className="spot-reserve-container">
-            <div className="spot-reserve-card">
-                <div className="spot-reserve-info">
-                    <p className="spot-price"><span>{`$${current.price}`}</span>night</p>
-                    <div className="spot-reserve-review-info">
-                        <div><FaStar />{current.avgStarRating}</div>
-                        •
-                        <div>{current.numReviews} {current.numReviews === 1 ? "review" : "reviews"}</div>
-                    </div>
+          <div className='spot-reserve-container'>
+            <div className='spot-reserve-card'>
+              <div className='spot-reserve-info'>
+                <p className='spot-price'>
+                  <span>{`$${current.price}`}</span>night
+                </p>
+                <div className='spot-reserve-review-info'>
+                  <div>
+                    <FaStar />
+                    {current.avgStarRating}
+                  </div>
+                  •
+                  <div>
+                    {current.numReviews}{" "}
+                    {current.numReviews === 1 ? "review" : "reviews"}
+                  </div>
                 </div>
-                    <button className="primary-btn" onClick={() => alert("Feature Coming Soon..")}>Reserve</button>
+              </div>
+              <button
+                className='primary-btn'
+                onClick={() => alert("Feature Coming Soon..")}
+              >
+                Reserve
+              </button>
             </div>
+          </div>
         </div>
+
+        {reviews && (
+          <div className='reviews-container'>
+            <h2>
+              <FaStar /> {current.avgStarRating}{" "}
+              {current.numReviews > 0
+                ? `• ${current.numReviews} ${
+                    current.numReviews === 1 ? "review" : "reviews"
+                  }`
+                : "New"}
+            </h2>
+            <div style={{ width: "fit-content" }}>
+              {user &&
+                current.Owner.id !== user.id &&
+                !Object.keys(reviews).includes(user.id) && (
+                  <OpenModalButton
+                    buttonText={"Post Your Review"}
+                    modalComponent={<AddReviewModal />}
+                  />
+                )}
+            </div>
+            {Object.values(reviews).length === 0 &&
+            user &&
+            current.Owner.id !== user.id ? (
+              <h3>Be the first one to post a review!</h3>
+            ) : (
+              Object.values(reviews)
+                .reverse()
+                .map((review) => <ReviewCard key={review.id} review={review} />)
+            )}
+          </div>
+        )}
       </div>
-
-      {reviews &&
-      <div className="reviews-container">
-        <h2><FaStar /> {current.avgStarRating} {current.numReviews > 0 ? `• ${current.numReviews} ${current.numReviews === 1 ? 'review' : 'reviews'}` : 'New'}</h2>
-        {user && current.Owner.id !== user.id && !Object.keys(reviews).includes(user.id) && <button onClick={handleReview} className="secondary-btn" style={{width: "fit-content", marginBottom: "25px"}}>Post Your Review</button>}
-        {Object.values(reviews).length === 0 && user && current.Owner.id !== user.id ? <h3>Be the first one to post a review!</h3> : Object.values(reviews).reverse().map(review=> <ReviewCard key={review.id} review={review}/>)}
-      </div> }
-
-    </div>) : <h2>{current.error}</h2> : <h1>Loading...</h1>
+    ) : (
+      <h2>{current.error}</h2>
+    )
+  ) : (
+    <h1>Loading...</h1>
   );
 };
 

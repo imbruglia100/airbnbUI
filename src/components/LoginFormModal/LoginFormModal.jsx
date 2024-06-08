@@ -16,7 +16,9 @@ function LoginFormModal() {
   const handleDemo = (e) => {
     e.preventDefault();
     setErrors({});
-    return dispatch(sessionActions.login({ credential: 'demo', password: 'demolition' }))
+    return dispatch(
+      sessionActions.login({ credential: "demo", password: "demolition" })
+    )
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
@@ -24,7 +26,7 @@ function LoginFormModal() {
           setErrors(data.errors);
         }
       });
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,7 +44,7 @@ function LoginFormModal() {
   return (
     <>
       <form id='demo' onSubmit={handleDemo}></form>
-      <form className="modalForm" onSubmit={handleSubmit}>
+      <form className='modalForm' onSubmit={handleSubmit}>
         <h1>Log In</h1>
         <div className='input-container'>
           <label>Username or Email</label>
@@ -64,7 +66,11 @@ function LoginFormModal() {
           />
         </div>
         {errors.credential && <p>{errors.credential}</p>}
-        <button disabled={credential.length < 4 || password.length < 6} className='primary-btn' type='submit'>
+        <button
+          disabled={credential.length < 4 || password.length < 6}
+          className='primary-btn'
+          type='submit'
+        >
           Log In
         </button>
 
