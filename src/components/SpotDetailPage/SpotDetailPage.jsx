@@ -67,7 +67,7 @@ const SpotDetailPage = () => {
                 <div className='spot-reserve-review-info'>
                   <div>
                     <FaStar />
-                    {current.avgStarRating}
+                    {current.avgStarRating <= 0 ? 'New' : current.avgStarRating}
                   </div>
                   •
                   <div>
@@ -89,9 +89,9 @@ const SpotDetailPage = () => {
         {reviews && (
           <div className='reviews-container'>
             <h2>
-              <FaStar /> {current.avgStarRating}{" "}
+              <FaStar />
               {current.numReviews > 0
-                ? `• ${current.numReviews} ${
+                ? `${current.avgStarRating} • ${current.numReviews} ${
                     current.numReviews === 1 ? "review" : "reviews"
                   }`
                 : "New"}
