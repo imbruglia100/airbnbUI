@@ -26,12 +26,14 @@
     gap: 5px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+
 }
 
-.img-container .img-small-container > img {
+.img-container .img-small-container > .small-img-container {
     max-width: 100%;
-    object-fit: fill;
-    object-position: center;
+    object-fit: cover;
+    object-position:center;
+    overflow: hidden;
 }
 
 .spot-info-container {

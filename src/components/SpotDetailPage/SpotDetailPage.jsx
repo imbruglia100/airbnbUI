@@ -22,15 +22,13 @@ const SpotDetailPage = () => {
     };
   });
   const isLoaded = useSelector((state) => state.spotState.current.isLoaded);
-
-  const handleReview = (e) => {
-    e.preventDefault();
-  };
   useEffect(() => {
     dispatch(setReviews({}));
     dispatch(getSpotById(spotId));
     dispatch(getReviewsBySpotById(spotId));
   }, [dispatch, spotId]);
+  const previewImg = current.SpotImages.filter(img => img.preview===true)
+
   return isLoaded ? (
     !current.error ? (
       <div className='spot-detail-container'>
@@ -38,12 +36,17 @@ const SpotDetailPage = () => {
         <h3>{`${current.city}, ${current.state}, ${current.country}`}</h3>
 
         <div className='img-container'>
-          <img className='main-preview-img' src={current.previewImages} />
+          <img className='main-preview-img' src={previewImg[0].url} />
 
           <div className='img-small-container'>
             {current.SpotImages.map((img, i) => {
-              if (i < 3) {
-                return <img key={img.id} src={img.url} />; //temp
+              if (!img.preview) {
+
+                return (
+                  <div className="small-img-container">
+                    <img key={img.id} src={img.url} />
+                  </div>
+              );
               }
             })}
           </div>
@@ -96,10 +99,10 @@ const SpotDetailPage = () => {
             <div style={{ width: "fit-content" }}>
               {user &&
                 current.Owner.id !== user.id &&
-                !Object.keys(reviews).includes(user.id) && (
+                !Object.values(reviews).find(review=> review.userId === user.id) && (
                   <OpenModalButton
                     buttonText={"Post Your Review"}
-                    modalComponent={<AddReviewModal />}
+                    modalComponent={<AddReviewModal spotId={current.id} />}
                   />
                 )}
             </div>
@@ -109,7 +112,6 @@ const SpotDetailPage = () => {
               <h3>Be the first one to post a review!</h3>
             ) : (
               Object.values(reviews)
-                .reverse()
                 .map((review) => <ReviewCard key={review.id} review={review} />)
             )}
           </div>

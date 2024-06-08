@@ -5,6 +5,7 @@ import { csrfFetch } from "./csrf";
 const SET_SPOTS = "spots/setSpots";
 const SET_CURRENT = "spots/setCurrentSpot";
 const ADD_SPOT = "spots/addSpot";
+const ADD_IMAGE = "spots/addImage"
 
 const setSpots = (spots) => {
   return {
@@ -76,6 +77,27 @@ export const createASpot = (newSpot) => async (dispatch) => {
   }
 };
 
+export const addImagesWithId = (id, images) => async (dispatch) => {
+  const imgArr = Object.values(images)
+  if(imgArr.length > 0){
+    imgArr.forEach(async (img) => {
+      const response = await csrfFetch(`/api/spots/${id}/images`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(img),
+      });
+
+      if (response.ok) {
+        const newImage = await response.json();
+
+        dispatch(addSpot(newImage));
+      }
+    })
+  }
+};
+
 const initialState = {
   spots: { error: null },
   isLoaded: false,
@@ -99,6 +121,11 @@ const spotsReducer = (state = initialState, action) => {
       return {
         ...state,
         spots: { ...state.spots, [action.payload.id]: action.payload },
+      };
+    case ADD_IMAGE:
+      return {
+        ...state,
+        current: { ...state.current, SpotImages: action.payload},
       };
     default:
       return state;

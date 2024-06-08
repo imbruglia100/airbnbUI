@@ -3,7 +3,7 @@
 import { useDispatch } from "react-redux";
 import "./CreateSpotPage.css";
 import { useState } from "react";
-import { createASpot } from "../../store/spots";
+import { addImagesWithId, createASpot } from "../../store/spots";
 import { useNavigate } from "react-router-dom";
 
 const CreateSpotPage = () => {
@@ -20,7 +20,7 @@ const CreateSpotPage = () => {
   });
 
   const [images, setImages] = useState({});
-
+  console.log(images)
   const [errors, setErrors] = useState({});
 
   const navigate = useNavigate()
@@ -66,7 +66,8 @@ const CreateSpotPage = () => {
         })
       : "";
 
-      !images.previewImage
+      const preview = images.find(img => img.preview === true)
+      !preview
       ? setErrors((prev) => {
           return { ...prev, previewImage: "Preview Image is required" };
         })
@@ -80,9 +81,15 @@ const CreateSpotPage = () => {
 
     if(!Object.values(errors).length > 0){
 
-        const { id } = await dispatch(createASpot(newSpot));
-        setNewSpot({})
-        navigate(`/huts/${id}`)
+        const res = await dispatch(createASpot(newSpot));
+
+        if(!res.errors){
+          const img = await dispatch(addImagesWithId(res.id, images))
+          if(!img.errors){
+            setNewSpot({})
+            navigate(`/huts/${res.id}`)
+          }
+        }
     }
 
     setErrors({})
@@ -257,7 +264,7 @@ const CreateSpotPage = () => {
             placeholder='Preview Image URL'
             onChange={({ target }) =>
               setImages((prev) => {
-                return { ...prev, previewImage: target.value};
+                return { ...prev, '4': {url: target.value, preview: true}};
               })
             }
           />
@@ -269,7 +276,7 @@ const CreateSpotPage = () => {
             placeholder='Image URL'
             onChange={({ target }) =>
               setImages((prev) => {
-                return { ...prev, images: {...prev.images, url: target.value} };
+                return { ...prev, '0': {url: target.value, preview: false} };
               })
             }
           />
@@ -281,7 +288,7 @@ const CreateSpotPage = () => {
             placeholder='Image URL'
             onChange={({ target }) =>
               setImages((prev) => {
-                return { ...prev, images: {...prev.images, url:target.value} };
+                return { ...prev,  '1':{url: target.value, preview: false}};
               })
             }
           />
@@ -293,7 +300,7 @@ const CreateSpotPage = () => {
             placeholder='Image URL'
             onChange={({ target }) =>
               setImages((prev) => {
-                return { ...prev, images: {...prev.images, url: target.value}};
+                return { ...prev,  '2': {url: target.value, preview: false}};
               })
             }
           />
@@ -305,7 +312,7 @@ const CreateSpotPage = () => {
             placeholder='Image URL'
             onChange={({ target }) =>
               setImages((prev) => {
-                return { ...prev, images: {...prev.images, url: target.value} };
+                return { ...prev, '3': {url: target.value, preview: false} };
               })
             }
           />
