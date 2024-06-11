@@ -5,16 +5,15 @@ import { useState } from "react";
 import './ReviewModal.css'
 import { useDispatch } from "react-redux";
 import { createAReviewWithId } from "../../store/reviews";
+import { useNavigate } from "react-router-dom";
 
-const AddReviewModal = ({spotId, setNumReviews}) => {
+const AddReviewModal = ({spotId}) => {
   const [review, setReview] = useState({
     review: '',
     stars: 5
   })
-
-
 const dispatch = useDispatch()
-  // useEffect(() => {
+
   //   const starContainer= document.getElementById("star-rating-container")
 
   //   const starArr = Array.from(starContainer.childNodes)
@@ -31,14 +30,12 @@ const dispatch = useDispatch()
   //     })
   //   }
   // })
-  // }, [])
 
   const handleChange = e => {
     e.preventDefault();
     setReview(prev => {return{...prev, stars: +e.target.value}})
   }
   const handleSubmit = async (e) => {
-    e.preventDefault();
 
     dispatch(createAReviewWithId(spotId, review))
   };

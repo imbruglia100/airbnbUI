@@ -16,7 +16,6 @@ const ManagePage = () => {
   const userReviews = useSelector((state) => state.reviewState.reviews);
 
   useEffect(() => {
-    console.log(userReviews?.message)
     dispatch(resetReviews());
     if (type === "huts") {
       dispatch(getSpotsFromCurrent());
@@ -24,6 +23,7 @@ const ManagePage = () => {
       dispatch(getReviewsByCurrentUser());
     }
   }, [dispatch, type]);
+  
   const ManageReviews = () => {
     return (
       <div className='management-container'>

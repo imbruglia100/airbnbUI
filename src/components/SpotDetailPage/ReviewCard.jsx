@@ -8,7 +8,6 @@ const ReviewCard = ({ manage, review }) => {
     const dispatch = useDispatch()
 
     const handleDelete = async (e) => {
-        e.preventDefault()
         await dispatch(delelteReview(review))
     }
 
@@ -22,8 +21,7 @@ const ReviewCard = ({ manage, review }) => {
             </div>
             {manage && (
                 <div className="btns-group">
-                    <button className="secondary-btn">Edit</button>
-                    <button className="primary-btn" onClick={handleDelete} style={{width:"fit-content"}}>Delete</button>
+                    <button className="secondary-btn" onClick={handleDelete} style={{width:"fit-content"}}>Delete</button>
                 </div>
             )}
         </div>

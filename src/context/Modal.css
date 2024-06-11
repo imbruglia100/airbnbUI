@@ -22,4 +22,6 @@
     position: absolute;
     background-color: white;
     border-radius: 16px;
+    max-height: 90vh;
+    overflow-y: scroll;
   }

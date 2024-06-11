@@ -6,7 +6,7 @@ import { useState } from "react";
 import { addImagesWithId, createASpot } from "../../store/spots";
 import { useNavigate } from "react-router-dom";
 
-const CreateSpotPage = () => {
+const CreateSpotPage = ({edit}) => {
   const dispatch = useDispatch();
 
   const [newSpot, setNewSpot] = useState({
@@ -22,7 +22,7 @@ const CreateSpotPage = () => {
   const [images, setImages] = useState({});
   const [errors, setErrors] = useState({});
   const [previewImage, setPreviewImage] = useState('')
-  console.log(images)
+
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -71,12 +71,6 @@ const CreateSpotPage = () => {
           return { ...prev, previewImage: "Preview Image is required" };
         })
       : "";
-
-    //   !images.images[0]
-    //   ? setErrors((prev) => {
-    //       return { ...prev, image: "PreviewImage is required" };
-    //     })
-    //   : "";
 
     if(!Object.values(errors).length > 0){
 

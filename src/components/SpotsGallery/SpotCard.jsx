@@ -6,6 +6,8 @@ import "./Spots.css";
 import { FaStar } from "react-icons/fa";
 import { deleteUserSpot } from "../../store/session";
 import { useDispatch } from "react-redux";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import EditPage from "../ManageHutsPage/EditPage";
 
 const SpotCard = ({ spot, manage }) => {
   const navigate = useNavigate();
@@ -13,6 +15,11 @@ const SpotCard = ({ spot, manage }) => {
   const handleRoute = () => {
     navigate(`/huts/${spot.id}`);
   };
+
+  const handleEdit = async (e) => {
+    e.preventDefault()
+    await dispatch(deleteUserSpot(spot.id))
+  }
 
   const handleDelete = async (e) => {
     e.preventDefault()
@@ -50,8 +57,11 @@ const SpotCard = ({ spot, manage }) => {
       </div>
       {manage && (
         <div className="btns-group">
-          <button className="secondary-btn">Edit</button>
-          <button className="primary-btn" onClick={handleDelete} style={{width:"fit-content"}}>Delete</button>
+          <OpenModalButton
+              buttonText='Edit'
+              modalComponent={<EditPage spot={spot} />}
+            />
+          <button className="secondary-btn" onClick={handleDelete} style={{width:"fit-content"}}>Delete</button>
         </div>
       )}
     </div>
