@@ -13,38 +13,25 @@ const SpotsGallery = () => {
 
   const [page, setPage] = useState(1);
 
-  const handlePage = (e) => {
-    e.preventDefault();
-    const increment = e.target.attributes.increment.value;
-    if (increment === "+") {
-      setPage((prev) => prev + 1);
-    }
-
-    if (increment === "-") {
-      if (page > 1) {
-        setPage((prev) => prev - 1);
-      }
-    }
-  };
-
   const NextPageBtns = () => (
     <div className='next-page-btns'>
       <button
         className='secondary-btn'
         increment='-'
-        onClick={handlePage}
+        onClick={() => page > 1 && setPage((prev) => prev - 1)}
       >{`<`}</button>
       <p>{page}</p>
       <button
         className='secondary-btn'
         increment='+'
-        onClick={handlePage}
+        onClick={() => setPage((prev) => prev + 1)}
       >{`>`}</button>
     </div>
   );
 
   useEffect(() => {
-    dispatch(getAllSpots(page));
+    const huts = dispatch(getAllSpots(page));
+    huts.isLoaded && console.log(huts)
   }, [dispatch, page]);
 
   return (

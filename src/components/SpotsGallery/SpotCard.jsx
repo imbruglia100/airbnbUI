@@ -4,12 +4,20 @@ import { useNavigate } from "react-router-dom";
 import house from "../../assets/house.png";
 import "./Spots.css";
 import { FaStar } from "react-icons/fa";
+import { deleteUserSpot } from "../../store/session";
+import { useDispatch } from "react-redux";
 
-const SpotCard = ({ spot }) => {
+const SpotCard = ({ spot, manage }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const handleRoute = () => {
     navigate(`/huts/${spot.id}`);
   };
+
+  const handleDelete = async (e) => {
+    e.preventDefault()
+    await dispatch(deleteUserSpot(spot.id))
+  }
   return (
     <div className='spot-card'>
       <div
@@ -40,6 +48,12 @@ const SpotCard = ({ spot }) => {
           )}
         </p>
       </div>
+      {manage && (
+        <div className="btns-group">
+          <button className="secondary-btn">Edit</button>
+          <button className="primary-btn" onClick={handleDelete} style={{width:"fit-content"}}>Delete</button>
+        </div>
+      )}
     </div>
   );
 };

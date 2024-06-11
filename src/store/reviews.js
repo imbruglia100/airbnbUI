@@ -1,7 +1,10 @@
 import { csrfFetch } from './csrf';
 
 const SET_REVIEWS = "reviews/setReviews";
-const ADD_REVIEW = "reviews/addReview"
+const ADD_REVIEW = "reviews/addReview";
+const REMOVE_REVIEW = "reviews/removeReview"
+
+const RESET = "reviews/reset"
 export const setReviews = (reviews) => {
   return {
     type: SET_REVIEWS,
@@ -9,7 +12,20 @@ export const setReviews = (reviews) => {
   };
 };
 
+export const resetReviews = () => {
+  return {
+    type: RESET
+  };
+};
+
 const addReview = (review) => {
+  return {
+    type: ADD_REVIEW,
+    payload: review
+  }
+}
+
+const removeReview = (review) => {
   return {
     type: ADD_REVIEW,
     payload: review
@@ -26,10 +42,27 @@ export const getReviewsBySpotById = (id) => async (dispatch) => {
 
           newState[review.id] = review
         })
-    
+
         dispatch(setReviews(newState))
         return newState
     }
+}
+
+export const getReviewsByCurrentUser = () => async (dispatch) => {
+  const response = await csrfFetch(`/api/reviews/current`)
+
+  if(response.ok){
+      const userReviews = await response.json()
+      const newState = {};
+      console.log(userReviews)
+      userReviews.Reviews && userReviews.Reviews.forEach(review => {
+
+        newState[review.id] = review
+      })
+
+      dispatch(setReviews(newState))
+      return newState
+  }
 }
 
 export const createAReviewWithId = (id, review) => async (dispatch) => {
@@ -51,22 +84,18 @@ export const createAReviewWithId = (id, review) => async (dispatch) => {
   return errors
 }
 
-// export const createASpot = (newSpot) => async (dispatch) => {
-//   const response = await csrfFetch(`/api/spots`, {
-//     method: 'POST',
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: newSpot
-//   })
+export const delelteReview = (review) => async (dispatch) => {
+  const response = await csrfFetch(`/api/reviews/${review.id}`, {
+    method: "delete",
+})
 
-//   if(response.ok){
-//       const newSpot = await response.json()
+  if(response.ok){
+     return dispatch(removeReview(review))
+  }
 
-//       dispatch(setCurrentSpot(newSpot))
-//       return newSpot
-//   }
-// }
+  const { errors } = await response.json()
+  return errors
+}
 
 const initialState = { reviews: null, isLoaded: false};
 
@@ -75,7 +104,11 @@ const reviewsReducer = (state = initialState, action) => {
     case SET_REVIEWS:
       return { ...state, reviews: {...action.payload}, isLoaded: true };
     case ADD_REVIEW:
-      return {...state, reviews: {...state.reviews, [action.payload.id]: action.payload}}
+      return {...state, reviews: {...state.reviews, [action.payload.id]: action.payload}, isLoaded: true}
+    case REMOVE_REVIEW:
+      return {...state, reviews: {...state.reviews, [action.payload.id]: null}}
+    case RESET:
+      return initialState
     default:
       return state;
   }

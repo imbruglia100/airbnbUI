@@ -2,7 +2,7 @@
 
 import { useParams } from "react-router-dom";
 import "./SpotDetailPage.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpotById } from "../../store/spots";
 import { FaStar } from "react-icons/fa";
@@ -14,13 +14,10 @@ import AddReviewModal from "../ReviewModal/ReviewModal";
 const SpotDetailPage = () => {
   const { spotId } = useParams();
   const dispatch = useDispatch();
-  const { current, reviews, user } = useSelector((state) => {
-    return {
-      current: state.spotState.current,
-      reviews: state.reviewState.reviews,
-      user: state.session.user,
-    };
-  });
+  const current = useSelector(state=>state.spotState.current)
+  const reviews = useSelector(state=>state.reviewState.reviews)
+  const user = useSelector(state=>state.session.user)
+
   const isLoaded = useSelector((state) => state.spotState.current.isLoaded);
   useEffect(() => {
     dispatch(setReviews({}));
@@ -43,7 +40,7 @@ const SpotDetailPage = () => {
               if (!img.preview) {
 
                 return (
-                  <div className="small-img-container">
+                  <div key={i} className="small-img-container">
                     <img key={img.id} src={img.url} />
                   </div>
               );

@@ -6,6 +6,7 @@ const SET_SPOTS = "spots/setSpots";
 const SET_CURRENT = "spots/setCurrentSpot";
 const ADD_SPOT = "spots/addSpot";
 const ADD_IMAGE = "spots/addImage"
+const RESET_CURRENT = "spots/resetCurrent"
 
 const setSpots = (spots) => {
   return {
@@ -25,6 +26,12 @@ const addSpot = (spot) => {
   return {
     type: ADD_SPOT,
     payload: spot,
+  };
+};
+
+const resetCurrent = () => {
+  return {
+    type: RESET_CURRENT
   };
 };
 
@@ -71,7 +78,7 @@ export const createASpot = (newSpot) => async (dispatch) => {
 
   if (response.ok) {
     const newSpot = await response.json();
-
+    dispatch(resetCurrent())
     dispatch(addSpot(newSpot));
     return newSpot;
   }
@@ -127,6 +134,11 @@ const spotsReducer = (state = initialState, action) => {
         ...state,
         current: { ...state.current, SpotImages: action.payload},
       };
+    case RESET_CURRENT:
+      return {
+        ...state,
+        current: initialState.current
+      }
     default:
       return state;
   }

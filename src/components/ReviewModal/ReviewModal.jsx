@@ -1,16 +1,18 @@
 /** @format */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // import { FaStar } from "react-icons/fa";
 import './ReviewModal.css'
 import { useDispatch } from "react-redux";
 import { createAReviewWithId } from "../../store/reviews";
 
-const AddReviewModal = ({spotId}) => {
+const AddReviewModal = ({spotId, setNumReviews}) => {
   const [review, setReview] = useState({
     review: '',
     stars: 5
   })
+
+
 const dispatch = useDispatch()
   // useEffect(() => {
   //   const starContainer= document.getElementById("star-rating-container")
@@ -31,7 +33,10 @@ const dispatch = useDispatch()
   // })
   // }, [])
 
-
+  const handleChange = e => {
+    e.preventDefault();
+    setReview(prev => {return{...prev, stars: +e.target.value}})
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,12 +57,12 @@ const dispatch = useDispatch()
           <FaStar id='4'/>
         </div> */}
         <label>Star Rating</label>
-          <select defaultValue={5}>
-            <option onChange={() => setReview(prev => {return{...prev, stars: 1}})}>1</option>
-            <option onChange={() => setReview(prev => {return{...prev, stars: 2}})}>2</option>
-            <option onChange={() => setReview(prev => {return{...prev, stars: 3}})}>3</option>
-            <option onChange={() => setReview(prev => {return{...prev, stars: 4}})}>4</option>
-            <option onChange={() => setReview(prev => {return{...prev, stars: 5}})}>5</option>
+          <select onChange={handleChange} defaultValue={review.stars}>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
           </select>
       </div>
 
