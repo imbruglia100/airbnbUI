@@ -25,3 +25,7 @@
     max-height: 90vh;
     overflow-y: scroll;
   }
+
+  #modal-content::-webkit-scrollbar {
+    width: 0px;
+  }

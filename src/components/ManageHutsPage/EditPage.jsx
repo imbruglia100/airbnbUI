@@ -9,6 +9,7 @@ const EditPage = ({spot}) => {
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
     const [newSpot, setNewSpot] = useState({});
+    
     const handleHut = async (e) => {
 
         if(!Object.values(errors).length > 0){

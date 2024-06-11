@@ -6,8 +6,8 @@
   border-radius: 8px;
   border: none;
   background-color: #C6824B;
-  height: 35px;
   margin: 8px 0;
+  padding: 4px 7px;
 }
 
 .primary-btn:hover {
@@ -24,6 +24,8 @@
 
 .secondary-btn {
   display: flex;
+  width: 100%;
+  padding: 4px 7px;
   justify-content: center;
   align-items: center;
   border: 2px solid #a7510b;

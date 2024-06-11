@@ -6,7 +6,6 @@ const SET_SPOTS = "spots/setSpots";
 const SET_CURRENT = "spots/setCurrentSpot";
 const ADD_SPOT = "spots/addSpot";
 const ADD_IMAGE = "spots/addImage"
-const UPDATE_SPOT = "spots/updateSpot"
 const RESET_CURRENT = "spots/resetCurrent"
 
 const setSpots = (spots) => {
@@ -87,7 +86,6 @@ export const createASpot = (newSpot) => async (dispatch) => {
 
 export const updateSpot = (spot, updatedSpot) => async (dispatch) => {
   const newSpot = Object.assign(spot, updatedSpot)
-  console.log(newSpot)
   const response = await csrfFetch(`/api/spots/${spot.id}`, {
     method: "put",
     headers: {

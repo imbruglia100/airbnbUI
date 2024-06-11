@@ -13,7 +13,7 @@ const ManagePage = () => {
   const { type } = useParams();
   const dispatch = useDispatch();
   const userSpots = useSelector((state) => state.session.userSpots);
-  const userReviews = useSelector((state) => state.reviewState.reviews);
+  const userReviews = useSelector((state) => state.reviewState);
 
   useEffect(() => {
     dispatch(resetReviews());
@@ -23,18 +23,22 @@ const ManagePage = () => {
       dispatch(getReviewsByCurrentUser());
     }
   }, [dispatch, type]);
-  
+
   const ManageReviews = () => {
     return (
       <div className='management-container'>
         <h1>Manage Your Reviews</h1>
         <div className='manage-review-cards'>
-          {userReviews ? (
-            Object.values(userReviews).map((review, i) => (
-              <ReviewCard key={i} manage={true} review={review} />
-            ))
+          {userReviews.isLoaded ? (
+            userReviews.reviews ? (
+              Object.values(userReviews.reviews).map((review, i) => (
+                <ReviewCard key={i} manage={true} review={review} />
+              ))
+            ) : (
+              <h2>Please visit a spot to post a review</h2>
+            )
           ) : (
-            <h2>Please visit a spot to post a review</h2>
+            <h1>Loading...</h1>
           )}
         </div>
       </div>
@@ -46,12 +50,16 @@ const ManagePage = () => {
       <div className='management-container'>
         <h1>Manage Your Huts</h1>
         <div className='manage-spot-cards'>
-          {userSpots ? (
-            Object.values(userSpots).map((spot, i) => (
-              <SpotCard manage={true} key={i} spot={spot} />
-            ))
+          {userSpots.isLoaded ? (
+            userSpots ? (
+              Object.values(userSpots).map((spot, i) => (
+                <SpotCard manage={true} key={i} spot={spot} />
+              ))
+            ) : (
+              <h2>You have no huts :{`(`}</h2>
+            )
           ) : (
-            <h2>You have no huts :{`(`}</h2>
+            <h1>Loading...</h1>
           )}
         </div>
       </div>

@@ -25,10 +25,10 @@ const addReview = (review) => {
   }
 }
 
-const removeReview = (review) => {
+const removeReview = (id) => {
   return {
     type: ADD_REVIEW,
-    payload: review
+    payload: id
   }
 }
 
@@ -54,7 +54,6 @@ export const getReviewsByCurrentUser = () => async (dispatch) => {
   if(response.ok){
       const userReviews = await response.json()
       const newState = {};
-      console.log(userReviews)
       userReviews.Reviews && userReviews.Reviews.forEach(review => {
 
         newState[review.id] = review
@@ -84,13 +83,13 @@ export const createAReviewWithId = (id, review) => async (dispatch) => {
   return errors
 }
 
-export const delelteReview = (review) => async (dispatch) => {
-  const response = await csrfFetch(`/api/reviews/${review.id}`, {
+export const delelteReview = (id) => async (dispatch) => {
+  const response = await csrfFetch(`/api/reviews/${id}`, {
     method: "delete",
 })
 
   if(response.ok){
-     return dispatch(removeReview(review))
+     return dispatch(removeReview(id))
   }
 
   const { errors } = await response.json()
@@ -106,7 +105,7 @@ const reviewsReducer = (state = initialState, action) => {
     case ADD_REVIEW:
       return {...state, reviews: {...state.reviews, [action.payload.id]: action.payload}, isLoaded: true}
     case REMOVE_REVIEW:
-      return {...state, reviews: {...state.reviews, [action.payload.id]: null}}
+      return {...state, reviews: {...state.reviews, [+action.payload]: null}}
     case RESET:
       return initialState
     default:

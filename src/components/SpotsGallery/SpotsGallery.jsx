@@ -31,7 +31,6 @@ const SpotsGallery = () => {
 
   useEffect(() => {
     const huts = dispatch(getAllSpots(page));
-    huts.isLoaded && console.log(huts)
   }, [dispatch, page]);
 
   return (
