@@ -9,8 +9,8 @@ const EditPage = ({spot}) => {
     const dispatch = useDispatch()
     const [errors, setErrors] = useState({})
     const [newSpot, setNewSpot] = useState({});
-    
-    const handleHut = async (e) => {
+
+    const handleHut = async () => {
 
         if(!Object.values(errors).length > 0){
 
@@ -165,71 +165,6 @@ const EditPage = ({spot}) => {
                 onChange={({ target }) =>
                   setNewSpot((prev) => {
                     return { ...prev, price: target.value };
-                  })
-                }
-              />
-            </div>
-          </div>
-
-          <div className='form-section'>
-            <h2>Add Pictures!</h2>
-            <div className='form-item'>
-            <span className="error">{errors.previewImage}</span>
-              <input
-                type='text'
-                placeholder='Preview Image URL'
-                onChange={({ target }) =>{
-                  setPreviewImage(target.value)
-                  setImages((prev) => {
-                    return { ...prev, '4': {url: target.value, preview: true}};
-                  })
-                }}
-              />
-            </div>
-
-            <div className='form-item'>
-              <input
-                type='text'
-                placeholder='Image URL'
-                onChange={({ target }) =>
-                  setImages((prev) => {
-                    return { ...prev, '0': {url: target.value, preview: false} };
-                  })
-                }
-              />
-            </div>
-
-            <div className='form-item'>
-              <input
-                type='text'
-                placeholder='Image URL'
-                onChange={({ target }) =>
-                  setImages((prev) => {
-                    return { ...prev,  '1':{url: target.value, preview: false}};
-                  })
-                }
-              />
-            </div>
-
-            <div className='form-item'>
-              <input
-                type='text'
-                placeholder='Image URL'
-                onChange={({ target }) =>
-                  setImages((prev) => {
-                    return { ...prev,  '2': {url: target.value, preview: false}};
-                  })
-                }
-              />
-            </div>
-
-            <div className='form-item'>
-              <input
-                type='text'
-                placeholder='Image URL'
-                onChange={({ target }) =>
-                  setImages((prev) => {
-                    return { ...prev, '3': {url: target.value, preview: false} };
                   })
                 }
               />

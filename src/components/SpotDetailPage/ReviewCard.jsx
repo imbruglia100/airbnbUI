@@ -9,7 +9,7 @@ const ReviewCard = ({ manage, review }) => {
     const {User} = review
     const dispatch = useDispatch()
 
-    const handleDelete = async (e) => {
+    const handleDelete = async () => {
         await dispatch(delelteReview(review.id))
     }
 

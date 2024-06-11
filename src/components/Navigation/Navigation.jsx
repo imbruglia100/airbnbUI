@@ -48,6 +48,7 @@ function Navigation({ isLoaded }) {
             }`,
             sessionUser.email,
             <button
+              key={1}
               className='secondary-btn'
               style={{ width: "100%", margin: "5px 0" }}
               onClick={() => navigate("/huts/manage/huts")}
@@ -55,13 +56,14 @@ function Navigation({ isLoaded }) {
               Manage Spots
             </button>,
             <button
+              key={2}
               className='secondary-btn'
               style={{ width: "100%", margin: "5px 0" }}
               onClick={() => navigate("/huts/manage/reviews")}
             >
               Manage Reviews
             </button>,
-            <LogoutBtn />,
+            <LogoutBtn key={3}/>,
           ]}
         />
       </li>
@@ -73,10 +75,12 @@ function Navigation({ isLoaded }) {
           icon={<GiHamburgerMenu style={{ fontSize: "20px" }} />}
           items={[
             <OpenModalButton
+              key={1}
               buttonText='Log In'
               modalComponent={<LoginFormModal />}
             />,
             <OpenModalButton
+              key={2}
               buttonText='Sign Up'
               modalComponent={<SignupFormModal />}
             />,

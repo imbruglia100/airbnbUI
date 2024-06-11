@@ -5,7 +5,6 @@ import { useState } from "react";
 import './ReviewModal.css'
 import { useDispatch } from "react-redux";
 import { createAReviewWithId } from "../../store/reviews";
-import { useNavigate } from "react-router-dom";
 
 const AddReviewModal = ({spotId}) => {
   const [review, setReview] = useState({
@@ -35,7 +34,7 @@ const dispatch = useDispatch()
     e.preventDefault();
     setReview(prev => {return{...prev, stars: +e.target.value}})
   }
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
 
     dispatch(createAReviewWithId(spotId, review))
   };

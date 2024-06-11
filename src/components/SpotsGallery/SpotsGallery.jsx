@@ -17,20 +17,22 @@ const SpotsGallery = () => {
     <div className='next-page-btns'>
       <button
         className='secondary-btn'
-        increment='-'
+        style={{ height: "25px" }}
+        data-increment='-'
         onClick={() => page > 1 && setPage((prev) => prev - 1)}
       >{`<`}</button>
       <p>{page}</p>
       <button
+        style={{ height: "25px" }}
         className='secondary-btn'
-        increment='+'
+        data-increment='+'
         onClick={() => setPage((prev) => prev + 1)}
       >{`>`}</button>
     </div>
   );
 
   useEffect(() => {
-    const huts = dispatch(getAllSpots(page));
+    dispatch(getAllSpots(page));
   }, [dispatch, page]);
 
   return (
@@ -39,7 +41,7 @@ const SpotsGallery = () => {
       <div className='spots-container'>
         {isLoaded ? (
           !spots.error ? (
-            spots.map((spot) => <SpotCard spot={spot} />)
+            spots.map((spot, i) => <SpotCard key={i} spot={spot} />)
           ) : (
             <h1>{spots.error}</h1>
           )

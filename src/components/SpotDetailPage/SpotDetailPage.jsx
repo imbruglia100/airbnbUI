@@ -2,7 +2,7 @@
 
 import { useParams } from "react-router-dom";
 import "./SpotDetailPage.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpotById } from "../../store/spots";
 import { FaStar } from "react-icons/fa";

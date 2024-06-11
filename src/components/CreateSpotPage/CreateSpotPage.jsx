@@ -6,7 +6,7 @@ import { useState } from "react";
 import { addImagesWithId, createASpot } from "../../store/spots";
 import { useNavigate } from "react-router-dom";
 
-const CreateSpotPage = ({edit}) => {
+const CreateSpotPage = () => {
   const dispatch = useDispatch();
 
   const [newSpot, setNewSpot] = useState({
