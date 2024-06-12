@@ -15,7 +15,6 @@ export default defineConfig(({ mode }) => ({
   // To automatically open the app in the browser whenever the server starts,
   // uncomment the following lines:
   server: {
-    port: 10000 ,
     proxy: {
       '/api': 'https://airbnb-arb5.onrender.com'
     }
