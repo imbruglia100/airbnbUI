@@ -105,16 +105,16 @@ export const restoreUser = () => async (dispatch) => {
     return response;
   };
 
-const initialState = { user: null };
+const initialState = { user: null, isLoaded: false, userSpots: {spots: null, isLoaded:false} };
 
 const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER:
       return { ...state, user: action.payload };
     case SET_USER_SPOTS:
-      return {...state, userSpots: action.payload}
+      return {...state, userSpots: {spots: {...action.payload}, isLoaded: true}}
     case REMOVE_USER_SPOT:
-      return {...state, userSpots: {...state.userSpots, [action.payload]: null}}
+      return {...state, userSpots: {...state.userSpots, spots: {[action.payload]: null}, isLoaded: true}}
     case REMOVE_USER:
       return { ...state, user: null };
     default:

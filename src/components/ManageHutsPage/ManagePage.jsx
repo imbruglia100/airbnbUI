@@ -30,7 +30,7 @@ const ManagePage = () => {
         <h1>Manage Your Reviews</h1>
         <div className='manage-review-cards'>
           {userReviews.isLoaded ? (
-            userReviews.reviews ? (
+            Object.keys(userReviews.reviews).length > 0 ? (
               Object.values(userReviews.reviews).map((review, i) => (
                 <ReviewCard key={i} manage={true} review={review} />
               ))
@@ -52,7 +52,7 @@ const ManagePage = () => {
         <div className='manage-spot-cards'>
           {userSpots.isLoaded ? (
             userSpots ? (
-              Object.values(userSpots).map((spot, i) => (
+              Object.values(userSpots.spots).map((spot, i) => (
                 <SpotCard manage={true} key={i} spot={spot} />
               ))
             ) : (
